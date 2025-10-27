@@ -131,5 +131,4 @@ public class Lab07_AstghikMinasyan extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
 }
