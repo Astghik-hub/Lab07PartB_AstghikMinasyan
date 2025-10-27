@@ -57,7 +57,7 @@ public class Lab07_AstghikMinasyan extends Application {
         path.getElements().add(new LineTo(80, 80 + 470));
         path.getElements().add(new LineTo(80, 80));
 
-        // Create object A
+        // Create object B
         Ellipse oval = new Ellipse();
         oval.setRadiusX(40);
         oval.setRadiusY(25);
