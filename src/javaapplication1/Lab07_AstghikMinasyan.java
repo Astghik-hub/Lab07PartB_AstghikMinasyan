@@ -4,13 +4,15 @@
  */
 package javaapplication1;
 
-import java.util.Timer;
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PathTransition;
+import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,7 +20,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -40,7 +44,12 @@ public class Lab07_AstghikMinasyan extends Application {
         Pane pane = new Pane();
         Scene scene = new Scene(pane, 700,700);
         
-        Rectangle path = new Rectangle(80, 80, 550, 450);
+        Path path = new Path();
+        path.getElements().add(new MoveTo(80, 80));
+        path.getElements().add(new LineTo(80 + 470, 80));
+        path.getElements().add(new LineTo(80 + 470, 80 + 470));
+        path.getElements().add(new LineTo(80, 80 + 470));
+        path.getElements().add(new LineTo(80, 80));
         
         Circle circle = new Circle(80, 80, 50);
         
@@ -53,13 +62,13 @@ public class Lab07_AstghikMinasyan extends Application {
         
         Button start = new Button("Start");
         start.setLayoutX(60);
-        start.setLayoutY(600);
+        start.setLayoutY(610);
         Button reset = new Button("Reset");
         reset.setLayoutX(120);
-        reset.setLayoutY(600);
+        reset.setLayoutY(610);
         Button exit = new Button("Exit");
         exit.setLayoutX(180);
-        exit.setLayoutY(600);
+        exit.setLayoutY(610);
        
         pane.getChildren().add(circle);
         pane.getChildren().add(oval);
@@ -69,17 +78,25 @@ public class Lab07_AstghikMinasyan extends Application {
         
         PathTransition pt  = new PathTransition(Duration.millis(5000), path, circle);
         pt.setCycleCount(Timeline.INDEFINITE);
-        pt.setRate(-1);
         
-        FadeTransition fade = new FadeTransition(Duration.millis(1280), oval);
-        fade.setCycleCount(Timeline.INDEFINITE);
+        FadeTransition fade = new FadeTransition(Duration.millis(1400), oval);
         fade.setFromValue(1.0);
         fade.setToValue(0.3);
         
-        ScaleTransition scale = new ScaleTransition(Duration.millis(1300), oval);
-        scale.setCycleCount(Timeline.INDEFINITE);
+        ScaleTransition scale = new ScaleTransition(Duration.millis(1100), oval);
+        scale.setToX(2);
+        scale.setToY(2);
         
-        SequentialTransition sequence = new SequentialTransition(fade);
+        RotateTransition rotate = new RotateTransition(Duration.millis(1000), oval);
+        rotate.setFromAngle(0);
+        rotate.setToAngle(90);
+        
+        TranslateTransition translate = new TranslateTransition(Duration.millis(1500), oval);
+        translate.setToX(290);
+        
+        SequentialTransition sequence = new SequentialTransition(fade, scale, rotate, translate);
+        sequence.setCycleCount(Animation.INDEFINITE);
+        
         ParallelTransition both = new ParallelTransition(pt, sequence);
         
         start.setOnMouseClicked(e ->  both.play());
