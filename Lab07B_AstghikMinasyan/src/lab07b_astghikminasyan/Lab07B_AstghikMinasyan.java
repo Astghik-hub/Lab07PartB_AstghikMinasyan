@@ -20,7 +20,8 @@ import javafx.stage.Stage;
  *
  * @author 2466920
  */
-public class Lab07B_AstghikMinasyan extends Application{
+public class Lab07B_AstghikMinasyan extends Application {
+
     public static int index = 0;
     public static Image[] images = new Image[20];
 
@@ -38,7 +39,7 @@ public class Lab07B_AstghikMinasyan extends Application{
         Scene scene = new Scene(root, 500, 500);
         stage.setTitle("Java Games");
 
-       // Create labels and center them 
+        // Create labels and center them 
         Label tLabel = new Label("Random Game");
         Label bLabel = new Label("Waiting...");
         Label lblImage = new Label();
@@ -52,29 +53,29 @@ public class Lab07B_AstghikMinasyan extends Application{
 
         // Put images in the array
         for (int i = 0; i < 20; i++) {
-            images[i] = new Image("file:" + System.getProperty("user.dir") + "//images//" + (100 + i++) + ".jpg");
+            images[i] = new Image(getClass().getResource("/images/" + (100 + i + 1) + ".jpg").toExternalForm());
         }
-        
+
         ImageView view = new ImageView(images[index]);
         lblImage.setGraphic(view);
         FadeTransition fade = new FadeTransition(Duration.seconds(2), view);
         fade.setFromValue(1);
         fade.setToValue(0);
-        
+
         fade.play();
         fade.setOnFinished(e -> {
             changeImage();
             view.setImage(images[index]);
             fade.playFromStart();
         });
-        
+
         // Show the scene
         stage.setScene(scene);
         stage.show();
     }
-    
+
     public void changeImage() {
-        if (index < images.length) {
+        if (index < images.length - 1) {
             index++;
         } else {
             index = 0;
